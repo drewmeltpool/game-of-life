@@ -7,7 +7,7 @@ class GameOfLife {
 
   constructor(private _world: World) {}
 
-  findAmountOfAliveNeigbors(x: number, y: number) {
+  public findAmountOfAliveNeigbors(x: number, y: number) {
     const tl = this.getCell(x - 1, y - 1);
     const tm = this.getCell(x - 1, y);
     const tr = this.getCell(x - 1, y + 1);
@@ -20,11 +20,11 @@ class GameOfLife {
     return [tl, tm, tr, ml, mr, bl, bm, br].filter((i) => i).length;
   }
 
-  updateCellInCloneWorld(x: number, y: number, value: number) {
+  private updateCellInCloneWorld(x: number, y: number, value: number) {
     this._cloneWorld.updateCell(x, y, value);
   }
 
-  updateCell(x: number, y: number, value: number) {
+  public updateCell(x: number, y: number, value: number) {
     this._world.updateCell(x, y, value);
   }
 
@@ -37,7 +37,7 @@ class GameOfLife {
     return this._world.map[row][column];
   }
 
-  next() {
+  public next() {
     for (let x = 0; x < this._height; x++)
       for (let y = 0; y < this._width; y++) {
         const amountOfAliveCell = this.findAmountOfAliveNeigbors(x, y);
@@ -55,7 +55,7 @@ class GameOfLife {
     return this._world.map;
   }
 
-  loop(
+  public loop(
     cb: (
       _counter: number,
       _matrix: number[][],

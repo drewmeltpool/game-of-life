@@ -21,7 +21,7 @@ export class World {
     this._map = this.generateEmpty();
   }
 
-  clone() {
+  public clone() {
     const world = new World(this._width, this._height);
 
     const oldMap = this._map.map((row) => row.map((v) => v));
@@ -31,11 +31,11 @@ export class World {
     return world;
   }
 
-  updateCell(x: number, y: number, value: number) {
+  public updateCell(x: number, y: number, value: number) {
     this._map[x][y] = value;
   }
 
-  generateEmpty() {
+  public generateEmpty() {
     this._map = Array(this._height)
       .fill(0)
       .map(() => Array(this._width).fill(0));
@@ -43,7 +43,7 @@ export class World {
     return this._map;
   }
 
-  generateRandom(chance = 0.5) {
+  public generateRandom(chance = 0.5) {
     this._map = Array(this._height)
       .fill(0)
       .map(() =>
@@ -55,7 +55,7 @@ export class World {
     return this._map;
   }
 
-  clear() {
+  public clear() {
     this._map = this.generateEmpty();
   }
 }
