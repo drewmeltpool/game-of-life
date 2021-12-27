@@ -10,7 +10,7 @@ export class World {
   }
 
   get width() {
-    return this._width;
+    return this._width - 1;
   }
 
   get height() {
