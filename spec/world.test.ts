@@ -1,49 +1,84 @@
 import { World } from '../src/World';
 
+// given
+// when
+// then
+
 describe('Create world', () => {
+  const emptyWorld = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ];
+
+  const expectedFill = [
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
+  ];
+
   it('Clear map', () => {
-    const world = new World(1, 1);
+    const world = new World(4, 4);
     world.clear();
-    expect(world.map).toEqual([[0]]);
+    expect(world.map).toEqual(emptyWorld);
   });
 
   it('Generate empty', () => {
-    const world = new World(1, 1);
+    const world = new World(4, 4);
 
-    expect(world.generateEmpty()).toEqual([[0]]);
+    expect(world.generateEmpty()).toEqual(emptyWorld);
   });
 
   it('Generate random with 1', () => {
-    const world = new World(1, 1);
+    const world = new World(4, 4);
 
-    expect(world.generateRandom(1)).toEqual([[1]]);
+    const actual = world.generateRandom(1);
+
+    expect(actual).toEqual(expectedFill);
   });
 
   it('Generate random with 0', () => {
-    const world = new World(1, 1);
+    const world = new World(4, 4);
 
-    expect(world.generateRandom(0)).toEqual([[0]]);
+    const actual = world.generateRandom(0);
+
+    expect(actual).toEqual(emptyWorld);
   });
 
   it('Update cell', () => {
-    const world = new World(1, 1);
-    world.updateCell(0, 0, 1);
-    expect(world.map[0][0]).toBe(1);
+    const expected = 1;
+
+    const world = new World(4, 4);
+    world.updateCell(0, 0, expected);
+    const actual = world.map[0][0];
+
+    expect(actual).toBe(1);
   });
 
   it('Clone world', () => {
-    const world = new World(1, 1);
-    const newWorld = world.clone();
-    expect(newWorld).toBeInstanceOf(World);
+    const expected = new World(4, 4);
+    const actual = expected.clone();
+
+    expect(actual.map).toEqual(expected.map);
   });
 
   it('Check width', () => {
-    const world = new World(1, 1);
-    expect(world.width).toBe(1);
+    const expected = 4;
+
+    const world = new World(4, 4);
+
+    const actual = world.width;
+    expect(actual).toBe(expected);
   });
 
   it('Check height', () => {
-    const world = new World(1, 1);
-    expect(world.height).toBe(1);
+    const expected = 4;
+
+    const world = new World(4, 4);
+
+    const actual = world.height;
+    expect(actual).toBe(expected);
   });
 });

@@ -2,17 +2,22 @@ import { World } from './src/World';
 import { Game } from './src/Game';
 import { IOProvider } from './src/IOProvider';
 
-const textFile = new IOProvider('test.txt');
-const world = new World(5, 5);
+const textFile = new IOProvider('qweqwe.txt');
 
-world.generateRandom();
+const [file, err] = textFile.readFileSync();
 
-const game = new Game(world);
+console.log(err);
 
-game.loop((counter, matrix, interval) => {
-  if (counter === 6) clearInterval(interval);
+// const world = new World(5, 5);
 
-  textFile.writeFileSync(matrix);
+// world.generateRandom();
 
-  console.info(matrix);
-}, 300);
+// const game = new Game(world);
+
+// game.loop((counter, matrix, interval) => {
+//   if (counter === 6) clearInterval(interval);
+
+//   textFile.writeFileSync(matrix);
+
+//   console.info(matrix);
+// }, 300);

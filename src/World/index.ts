@@ -1,6 +1,10 @@
 export class World {
   private _map: number[][];
 
+  constructor(private _width: number, private _height: number) {
+    this._map = this.generateEmpty();
+  }
+
   get map() {
     return this._map;
   }
@@ -15,10 +19,6 @@ export class World {
 
   get height() {
     return this._height;
-  }
-
-  constructor(private _width: number, private _height: number) {
-    this._map = this.generateEmpty();
   }
 
   public clone() {

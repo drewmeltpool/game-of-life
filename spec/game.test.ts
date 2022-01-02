@@ -2,44 +2,45 @@ import { World } from '../src/World';
 import { Game } from '../src/Game';
 
 describe('Game test', () => {
-  it('update cell to 1', () => {
-    const world = new World(1, 1);
-    world.generateEmpty();
+  it('Update cell to 1', () => {
+    const expected = 1;
+
+    const world = new World(3, 3);
+    world.generateRandom(1);
     const game = new Game(world);
-    game.updateCell(0, 0, 1);
-    expect(game.getCell(0, 0)).toBe(1);
+    game.updateCell(0, 0, expected);
+
+    const actual = game.map[0][0];
+
+    expect(actual).toBe(expected);
   });
 
-  it('update cell to 0', () => {
-    const world = new World(1, 1);
-    world.generateEmpty();
+  it('Update cell to 0', () => {
+    const expected = 0;
+
+    const world = new World(3, 3);
+    world.generateRandom(1);
     const game = new Game(world);
-    game.updateCell(0, 0, 0);
-    expect(game.getCell(0, 0)).toBe(0);
+    game.updateCell(0, 0, expected);
+
+    const actual = game.map[0][0];
+
+    expect(actual).toBe(expected);
   });
 
-  it('get cell', () => {
-    const world = new World(1, 1);
+  it('One iteration', () => {
+    const expected = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+
+    const world = new World(4, 4);
     world.generateEmpty();
     const game = new Game(world);
-    expect(game.getCell(0, 0)).toBe(0);
-  });
+    const actual = game.next();
 
-  it('one iteration', () => {
-    const world = new World(1, 1);
-    world.generateEmpty();
-    const game = new Game(world);
-    expect(game.next()).toEqual([[0]]);
-  });
-
-  it('game loop', () => {
-    const world = new World(1, 1);
-    world.generateEmpty();
-    const game = new Game(world);
-
-    game.loop((counter, _, timer) => {
-      if (counter === 0) clearInterval(timer);
-      expect(counter).toBe(0);
-    });
+    expect(actual).toEqual(expected);
   });
 });

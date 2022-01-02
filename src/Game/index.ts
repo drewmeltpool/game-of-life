@@ -7,6 +7,10 @@ class GameOfLife {
 
   constructor(private _world: World) {}
 
+  get map() {
+    return this._world.map;
+  }
+
   public findAmountOfAliveNeigbors(x: number, y: number) {
     const tl = this.getCell(x - 1, y - 1);
     const tm = this.getCell(x - 1, y);
@@ -28,7 +32,7 @@ class GameOfLife {
     this._world.updateCell(x, y, value);
   }
 
-  getCell(x: number, y: number) {
+  public getCell(x: number, y: number) {
     const row =
       x < 0 ? this._width + x : x > this._width - 1 ? this._width - x : x;
     const column =
