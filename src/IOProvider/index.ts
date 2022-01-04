@@ -1,33 +1,30 @@
 import fs from 'fs';
 
 export class IOProvider {
-  private _error: unknown;
-  private _file = '';
-
   constructor(private readonly _fileName: string) {}
 
-  public readFileSync<T = unknown>(cb?: (_file: string) => T) {
-    let data;
+  public readFileSync() {
+    let file;
+    let err;
     try {
-      this._file = fs.readFileSync(this._fileName, 'utf-8');
-      data = cb ? cb(this._file) : this._file;
+      file = fs.readFileSync(this._fileName, 'utf-8');
     } catch (e) {
-      this._error = new Error(`File not found`);
+      err = new Error(`File not found`);
     }
 
-    return [data, this._error];
+    return [file, err];
   }
 
-  public writeFileSync<T = unknown>(data: T): [string, unknown] {
-    let newFile = '';
-    this._error = null;
+  public writeFileSync<T = unknown>(data: T) {
+    let file;
+    let err;
     try {
-      newFile = String(data);
-      fs.writeFileSync(this._fileName, newFile);
+      file = String(data);
+      fs.writeFileSync(this._fileName, file);
     } catch (error) {
-      this._error = error;
+      err = new Error('Something went wrong when writing to file');
     }
 
-    return [newFile, this._error];
+    return [file, err];
   }
 }

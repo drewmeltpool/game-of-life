@@ -1,9 +1,5 @@
 import { World } from '../src/World';
 
-// given
-// when
-// then
-
 describe('Create world', () => {
   const emptyWorld = [
     [0, 0, 0, 0],
