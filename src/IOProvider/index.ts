@@ -3,8 +3,8 @@ import fs from 'fs';
 export class IOProvider {
   constructor(private readonly _fileName: string) {}
 
-  public readFileSync() {
-    let file;
+  public readFileSync(): [string, unknown] {
+    let file = '';
     let err;
     try {
       file = fs.readFileSync(this._fileName, 'utf-8');

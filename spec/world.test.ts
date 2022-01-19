@@ -18,6 +18,7 @@ describe('Create world', () => {
   it('Clear map', () => {
     const world = new World(4, 4);
     world.clear();
+
     expect(world.map).toEqual(emptyWorld);
   });
 

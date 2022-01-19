@@ -1,5 +1,8 @@
 import { World } from '../src/World';
 import { Game } from '../src/Game';
+import { IOProvider } from '../src/IOProvider';
+import { parseFile } from '../src/parseFile';
+import { parseMap } from '../src/parseMap';
 
 describe('Game test', () => {
   it('Update cell to 1', () => {
@@ -28,18 +31,70 @@ describe('Game test', () => {
     expect(actual).toBe(expected);
   });
 
-  it('One iteration', () => {
-    const expected = [
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-    ];
+  it('3 iteration', () => {
+    const expected = `........
+........
+.xxx....
+........
+........`;
 
-    const world = new World(4, 4);
-    world.generateEmpty();
+    const gameFieldText = `3
+8 5
+........
+..x.....
+..x.....
+..x.....
+........`;
+
+    const testFile = new IOProvider('test.txt');
+
+    testFile.writeFileSync(gameFieldText);
+
+    const [file] = testFile.readFileSync();
+
+    const { generation, width, height, matrix } = parseFile(file);
+
+    const world = new World(width, height);
+
+    world.map = matrix;
+
     const game = new Game(world);
-    const actual = game.next();
+
+    const actual = parseMap(game.loop(generation));
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('cells on border', () => {
+    const expected = `xxx..
+.....
+.....
+.....
+xxx..`;
+
+    const gameFieldText = `1
+5 5
+xx...
+.....
+.....
+.....
+.xx..`;
+
+    const testFile = new IOProvider('test.txt');
+
+    testFile.writeFileSync(gameFieldText);
+
+    const [file] = testFile.readFileSync();
+
+    const { generation, width, height, matrix } = parseFile(file);
+
+    const world = new World(width, height);
+
+    world.map = matrix;
+
+    const game = new Game(world);
+
+    const actual = parseMap(game.loop(generation));
 
     expect(actual).toEqual(expected);
   });

@@ -33,12 +33,16 @@ class GameOfLife {
   }
 
   public getCell(x: number, y: number) {
-    const row =
-      x < 0 ? this._width + x : x > this._width - 1 ? this._width - x : x;
-    const column =
-      y < 0 ? this._height + y : y > this._height - 1 ? this._height - y : y;
+    try {
+      const row =
+        x < 0 ? this._width + x : x > this._width - 1 ? this._width - x : x;
+      const column =
+        y < 0 ? this._height + y : y > this._height - 1 ? this._height - y : y;
 
-    return this._world.map[row][column];
+      return this._world.map[row][column];
+    } catch (e) {
+      return 0;
+    }
   }
 
   public next() {
@@ -59,22 +63,14 @@ class GameOfLife {
     return this._world.map;
   }
 
-  public loop(
-    cb: (
-      _counter: number,
-      _matrix: number[][],
-      _interval: NodeJS.Timer
-    ) => void,
-    delay = 0
-  ) {
-    let counter = 0;
+  public loop(generation: number) {
+    let matrix = this._world.map;
 
-    const interval: NodeJS.Timer = setInterval(
-      () => cb(counter++, this.next(), interval),
-      delay
-    );
+    while (generation--) {
+      matrix = this.next();
+    }
 
-    return interval;
+    return matrix;
   }
 }
 

@@ -1,23 +1,21 @@
 import { World } from './src/World';
 import { Game } from './src/Game';
+import { parseFile } from './src/parseFile';
 import { IOProvider } from './src/IOProvider';
+import { parseMap } from './src/parseMap';
 
 const textFile = new IOProvider('qweqwe.txt');
 
-const [file, err] = textFile.readFileSync();
+const [file] = textFile.readFileSync();
 
-console.log(err);
+const { generation, width, height, matrix } = parseFile(file);
 
-// const world = new World(5, 5);
+const world = new World(width, height);
 
-// world.generateRandom();
+world.map = matrix;
 
-// const game = new Game(world);
+const game = new Game(world);
 
-// game.loop((counter, matrix, interval) => {
-//   if (counter === 6) clearInterval(interval);
+const landscape = parseMap(game.loop(generation));
 
-//   textFile.writeFileSync(matrix);
-
-//   console.info(matrix);
-// }, 300);
+console.info(landscape);
